@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>kr.co.redbrush.microservice</groupId>
 	<artifactId>microservice-demo</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>microservice-demo</name>
 	<description>Kotlin Micro Service with SpringBoot 2.0 Boiler Template</description>
 
