@@ -71,6 +71,39 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<!--
+                command todo release start and finish at once
+                mvn jgitflow:release-start jgitflow:release-finish -Dmaven.test.skip=true -P
+                command todo release start and finish in steps
+                mvn jgitflow:release-start -Dmaven.test.skip=true -P local,linux
+                #do some other action
+                mvn jgitflow:release-finish -Dmaven.test.skip=true -P local,linux
+            -->
+			<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<version>1.0-m5.1</version>
+				<configuration>
+					<!-- For specific plugin configuration options,
+					see the Goals documentation page -->
+					<flowInitContext>
+						<masterBranchName>master</masterBranchName>
+						<developBranchName>develop</developBranchName>
+						<featureBranchPrefix>feature-</featureBranchPrefix>
+						<releaseBranchPrefix>release-</releaseBranchPrefix>
+						<hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+						<versionTagPrefix>Release </versionTagPrefix>
+					</flowInitContext>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<enableSshAgent>true</enableSshAgent>
+					<noDeploy>true</noDeploy>
+					<allowUntracked>true</allowUntracked>
+					<pushReleases>true</pushReleases>
+					<pullDevelop>true</pullDevelop>
+					<pullMaster>true</pullMaster>
+					<scmCommentPrefix>[RELEASE] </scmCommentPrefix>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
