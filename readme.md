@@ -9,7 +9,7 @@ $ cd /go/to/project
 $ mvn spring-boot:run
 ```
 
-You can request heartbeat page on your browser http://localhost:8080/heartbeat. 
+You can request hello page on your browser http://localhost:8080/hello. 
 
 # IDE Support
 This project is developed with IntelliJ.
