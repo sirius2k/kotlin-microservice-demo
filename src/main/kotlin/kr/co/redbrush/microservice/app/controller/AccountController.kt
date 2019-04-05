@@ -22,7 +22,7 @@ class AccountController {
 
     @RequestMapping("/account", method = [RequestMethod.POST])
     fun createAccount(@RequestBody account : Account) {
-        accounts[account.id] = account;
+        accounts[account.id] = account
     }
 
     @RequestMapping("/account/{id}", method = [RequestMethod.PUT])
