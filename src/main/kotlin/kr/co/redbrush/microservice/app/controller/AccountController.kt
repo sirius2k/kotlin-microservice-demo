@@ -10,27 +10,27 @@ class AccountController {
     @Autowired
     lateinit var accounts : ConcurrentHashMap<String, Account>
 
-    @RequestMapping("/account", method = [RequestMethod.GET])
+    @GetMapping("/account")
     fun getAccount() = accounts["test"]
 
-    @RequestMapping("/accounts", method = [RequestMethod.GET])
+    @GetMapping("/accounts")
     fun getAccounts(@RequestParam(required = false, defaultValue = "") id: String) : List<Account> {
         return accounts.filter {
             it.value.id.contains(id, true)
         }.map(Map.Entry<String, Account>::value).toList()
     }
 
-    @RequestMapping("/account", method = [RequestMethod.POST])
+    @PostMapping("/account")
     fun createAccount(@RequestBody account : Account) {
         accounts[account.id] = account
     }
 
-    @RequestMapping("/account/{id}", method = [RequestMethod.PUT])
+    @PutMapping("/account/{id}")
     fun updateAccount(@PathVariable id: String, @RequestBody account: Account) {
         accounts.remove(id)
         accounts[account.id] = account
     }
 
-    @RequestMapping("/account/{id}", method = [RequestMethod.DELETE])
+    @DeleteMapping("/account/{id}")
     fun deleteAccount(@PathVariable id: String) = accounts.remove(id)
 }
