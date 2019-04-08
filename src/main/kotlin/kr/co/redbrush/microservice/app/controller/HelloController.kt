@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class HelloController {
-    @RequestMapping("/hello", method = [RequestMethod.GET])
+    @GetMapping("/hello")
     @ResponseBody
     fun hello() = "Hello kotlin microservice!"
 
-    @RequestMapping("/hello/{name}", method = [RequestMethod.GET])
+    @GetMapping("/hello/{name}")
     @ResponseBody
     fun hello(@PathVariable name: String) = "Hello $name!"
 }
