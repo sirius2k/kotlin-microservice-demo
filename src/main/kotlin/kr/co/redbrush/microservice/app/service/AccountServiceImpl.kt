@@ -1,6 +1,7 @@
 package kr.co.redbrush.microservice.app.service
 
 import kr.co.redbrush.microservice.app.data.Account
+import kr.co.redbrush.microservice.app.data.Telephone
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
@@ -8,8 +9,9 @@ import java.util.concurrent.ConcurrentHashMap
 class AccountServiceImpl : AccountService {
     companion object {
         val initialAccounts = arrayOf(
-            Account("test", "1234"),
-            Account("admin", "1234")
+            Account("test", "1234", Telephone("+82", "12345678")),
+            Account("test1", "1234", Telephone("+82", "98764321")),
+            Account("test2", "1234")
         )
     }
     val accounts = ConcurrentHashMap<String, Account>(initialAccounts.associateBy(Account::id))
