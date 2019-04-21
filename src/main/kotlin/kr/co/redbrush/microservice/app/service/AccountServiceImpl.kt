@@ -3,6 +3,7 @@ package kr.co.redbrush.microservice.app.service
 import kr.co.redbrush.microservice.app.data.Account
 import kr.co.redbrush.microservice.app.data.Telephone
 import org.springframework.stereotype.Service
+import reactor.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
 
 @Service
@@ -16,7 +17,7 @@ class AccountServiceImpl : AccountService {
     }
     val accounts = ConcurrentHashMap<String, Account>(initialAccounts.associateBy(Account::id))
 
-    override fun getAccount(id: String) = accounts[id]
+    override fun getAccount(id: String) = accounts[id]?.toMono()
 
     override fun createAccount(account: Account) {
         accounts[account.id] = account

@@ -1,13 +1,12 @@
 package kr.co.redbrush.microservice.app.controller
 
 import kr.co.redbrush.microservice.app.data.Account
-import kr.co.redbrush.microservice.app.data.ErrorResponse
-import kr.co.redbrush.microservice.app.exception.AccountNotFoundException
 import kr.co.redbrush.microservice.app.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Mono
 
 @RestController
 class AccountController {
@@ -15,13 +14,10 @@ class AccountController {
     private lateinit var accountService: AccountService
 
     @GetMapping("/account/{id}")
-    fun getAccount(@PathVariable id: String) : ResponseEntity<Any> {
-        val account = accountService.getAccount(id) ?: throw AccountNotFoundException("account '$id' not found")
+    fun getAccount(@PathVariable id: String) : ResponseEntity<Mono<Account>> {
+        val account = accountService.getAccount(id)
 
-        return if (account != null)
-            ResponseEntity(account, HttpStatus.OK)
-        else
-            ResponseEntity(ErrorResponse("Account Not Found", "account '$id' not found"), HttpStatus.NOT_FOUND)
+        return ResponseEntity(account, HttpStatus.OK)
     }
 
     @GetMapping("/accounts")
