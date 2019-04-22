@@ -3,6 +3,7 @@ package kr.co.redbrush.microservice.app.service
 import kr.co.redbrush.microservice.app.data.Account
 import kr.co.redbrush.microservice.app.data.Telephone
 import org.springframework.stereotype.Service
+import reactor.core.publisher.toFlux
 import reactor.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
 
@@ -32,8 +33,7 @@ class AccountServiceImpl : AccountService {
         accounts.remove(id)
     }
 
-    override fun searchAccounts(idFilter: String): List<Account> =
-        accounts.filter {
-            it.value.id.contains(idFilter, true)
-        }.map(Map.Entry<String, Account>::value).toList()
+    override fun searchAccounts(idFilter: String) = accounts.filter {
+        it.value.id.contains(idFilter, true)
+    }.map(Map.Entry<String, Account>::value).toFlux()
 }
