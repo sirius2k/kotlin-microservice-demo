@@ -1,6 +1,7 @@
 package kr.co.redbrush.microservice.app.service
 
 import kr.co.redbrush.microservice.app.data.Account
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 interface AccountService {
@@ -8,5 +9,5 @@ interface AccountService {
     fun createAccount(account: Account)
     fun updateAccount(id: String, account: Account)
     fun deleteAccount(id: String)
-    fun searchAccounts(idFilter: String) : List<Account>
+    fun searchAccounts(idFilter: String) : Flux<Account>
 }

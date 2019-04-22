@@ -21,9 +21,7 @@ class AccountController {
     }
 
     @GetMapping("/accounts")
-    fun getAccounts(@RequestParam(required = false, defaultValue = "") idFilter: String) : List<Account> {
-        return accountService.searchAccounts(idFilter)
-    }
+    fun getAccounts(@RequestParam(required = false, defaultValue = "") idFilter: String) = accountService.searchAccounts(idFilter)
 
     @PostMapping("/account")
     fun createAccount(@RequestBody account : Account): ResponseEntity<Unit?> {
