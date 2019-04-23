@@ -24,18 +24,14 @@ class AccountController {
     fun getAccounts(@RequestParam(required = false, defaultValue = "") idFilter: String) = accountService.searchAccounts(idFilter)
 
     @PostMapping("/account")
-    fun createAccount(@RequestBody account : Account): ResponseEntity<Unit?> {
-        accountService.createAccount(account)
-
-        return ResponseEntity(Unit, HttpStatus.CREATED)
-    }
+    fun createAccount(@RequestBody accountMono : Mono<Account>) = ResponseEntity(accountService.createAccount(accountMono), HttpStatus.CREATED)
 
     @PutMapping("/account/{id}")
-    fun updateAccount(@PathVariable id: String, @RequestBody account: Account): ResponseEntity<Unit> {
+    fun updateAccount(@PathVariable id: String, @RequestBody accountMono: Mono<Account>): ResponseEntity<Unit> {
         var status = HttpStatus.NOT_FOUND
 
         if (accountService.getAccount(id) != null) {
-            accountService.updateAccount(id, account)
+            accountService.updateAccount(id, accountMono)
             status = HttpStatus.ACCEPTED
         }
 

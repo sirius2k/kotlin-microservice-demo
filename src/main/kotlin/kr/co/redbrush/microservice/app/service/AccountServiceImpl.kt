@@ -3,6 +3,7 @@ package kr.co.redbrush.microservice.app.service
 import kr.co.redbrush.microservice.app.data.Account
 import kr.co.redbrush.microservice.app.data.Telephone
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
 import reactor.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
@@ -20,13 +21,16 @@ class AccountServiceImpl : AccountService {
 
     override fun getAccount(id: String) = accounts[id]?.toMono()
 
-    override fun createAccount(account: Account) {
-        accounts[account.id] = account
+    override fun createAccount(accountMono: Mono<Account>): Mono<*> {
+        return accountMono.subscribe {
+            accounts[it.id] = it
+        }.toMono()
     }
 
-    override fun updateAccount(id: String, account: Account) {
+    override fun updateAccount(id: String, accountMono: Mono<Account>): Mono<*> {
         deleteAccount(id)
-        createAccount(account)
+
+        return createAccount(accountMono)
     }
 
     override fun deleteAccount(id: String) {
