@@ -22,9 +22,10 @@ class AccountServiceImpl : AccountService {
     override fun getAccount(id: String) = accounts[id]?.toMono()
 
     override fun createAccount(accountMono: Mono<Account>): Mono<*> {
-        return accountMono.subscribe {
+        return accountMono.map {
             accounts[it.id] = it
-        }.toMono()
+            Mono.empty<Any>()
+        }
     }
 
     override fun updateAccount(id: String, accountMono: Mono<Account>): Mono<*> {
