@@ -1,21 +1,18 @@
 package kr.co.redbrush.microservice.app.router
 
-import kr.co.redbrush.microservice.app.data.Account
+import kr.co.redbrush.microservice.app.handler.AccountHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.RouterFunction
 import org.springframework.web.reactive.function.server.router
-import reactor.core.publisher.toMono
 
 @Component
-class AccountRouter {
+class AccountRouter(private val accountHandler: AccountHandler) {
     @Bean
     fun accountRoutes(): RouterFunction<*> = router {
         "/functional".nest {
             "/account".nest {
-                GET("/") {
-                    ok().body(Account("test", "password").toMono(), Account::class.java)
-                }
+                GET("/", accountHandler::get)
             }
         }
     }
