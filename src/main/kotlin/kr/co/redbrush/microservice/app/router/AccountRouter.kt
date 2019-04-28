@@ -12,7 +12,7 @@ class AccountRouter(private val accountHandler: AccountHandler) {
     fun accountRoutes(): RouterFunction<*> = router {
         "/functional".nest {
             "/account".nest {
-                GET("/", accountHandler::get)
+                GET("/{id}", accountHandler::get)
             }
         }
     }

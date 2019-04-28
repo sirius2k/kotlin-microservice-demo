@@ -19,7 +19,7 @@ class AccountServiceImpl : AccountService {
     }
     val accounts = ConcurrentHashMap<String, Account>(initialAccounts.associateBy(Account::id))
 
-    override fun getAccount(id: String) = accounts[id]?.toMono()
+    override fun getAccount(id: String) = accounts[id]?.toMono() ?: Mono.empty()
 
     override fun createAccount(accountMono: Mono<Account>): Mono<*> {
         return accountMono.map {
