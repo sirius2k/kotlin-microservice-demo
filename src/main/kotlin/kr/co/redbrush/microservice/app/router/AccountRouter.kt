@@ -13,6 +13,10 @@ class AccountRouter(private val accountHandler: AccountHandler) {
         "/functional".nest {
             "/account".nest {
                 GET("/{id}", accountHandler::get)
+                POST("/", accountHandler::create)
+            }
+            "/accounts".nest {
+                GET("/", accountHandler::search)
             }
         }
     }

@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono
 
 interface AccountService {
     fun getAccount(id: String) : Mono<Account>
-    fun createAccount(accountMono: Mono<Account>) : Mono<*>
+    fun createAccount(accountMono: Mono<Account>) : Mono<Account>
     fun updateAccount(id: String, accountMono: Mono<Account>) : Mono<*>
     fun deleteAccount(id: String)
     fun searchAccounts(idFilter: String) : Flux<Account>
