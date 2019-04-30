@@ -7,6 +7,7 @@ import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
 import reactor.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
+import javax.security.auth.login.AccountException
 
 @Service
 class AccountServiceImpl : AccountService {
@@ -21,14 +22,17 @@ class AccountServiceImpl : AccountService {
 
     override fun getAccount(id: String) = accounts[id]?.toMono() ?: Mono.empty()
 
-    override fun createAccount(accountMono: Mono<Account>): Mono<Account> {
-        return accountMono.map {
-            accounts[it.id] = it
-            it
-        }
-    }
+    override fun createAccount(accountMono: Mono<Account>): Mono<Account> =
+            accountMono.flatMap {
+                if (accounts[it.id] == null) {
+                    accounts[it.id] = it
+                    it.toMono()
+                } else {
+                    Mono.error(AccountException("Account ${it.id} already exists."))
+                }
+            }
 
-    override fun updateAccount(id: String, accountMono: Mono<Account>): Mono<*> {
+    override fun updateAccount(id: String, accountMono: Mono<Account>): Mono<Account> {
         deleteAccount(id)
 
         return createAccount(accountMono)
