@@ -1,4 +1,6 @@
+# Start mongo - $ docker-compose -f mongo-stack.yml up
 # Use root/example as user/password credentials
+# Container shell access - $ docker exec -it {mongo_container_name} bash
 version: '3.1'
 
 services:
