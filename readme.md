@@ -6,6 +6,7 @@ You can run this demo with the following command.
 
 ```sh
 $ cd /go/to/project
+$ docker-compose -f mongo-stack.yml up -d
 $ mvn spring-boot:run
 ```
 
