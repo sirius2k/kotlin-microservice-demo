@@ -1,3 +1,8 @@
 spring:
   jackson:
     default-property-inclusion: NON_NULL
+  data:
+    mongodb:
+      host: "localhost"
+      port: 27700
+      database: "microservices"
