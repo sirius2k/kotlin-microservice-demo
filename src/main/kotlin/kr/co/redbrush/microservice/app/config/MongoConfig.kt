@@ -12,8 +12,14 @@ class MongoConfig {
 
     @PostConstruct
     fun initData() {
-        mongoOperations.createCollection("Accounts").subscribe {
-            println("Account collections initialize.")
+        mongoOperations.collectionExists("Accounts").subscribe {
+            if (it != true) {
+                mongoOperations.createCollection("Accounts").subscribe {
+                    println("Account collections initialize.")
+                }
+            } else {
+                println("Accounts collections already exists.")
+            }
         }
     }
 }
