@@ -2,11 +2,39 @@
 This project is kotlin micro service template project which is developed on top of the SprintBoot 2.x..
 
 ## Installation
-You can run this demo with the following command. 
+
+### Run Mongodb
+Before you start the demo application, you will need to run mongodb with docker.
 
 ```bash
 $ cd /go/to/project
 $ docker-compose -f mongo-stack.yml up -d
+```
+
+In order to access mongo db with specific user described in application.yml you should create user in the MongoDB. You will need to install mongo client.
+
+```bash
+$ mongo 127.0.0.1:27700/admin -u root -p 'example'
+> db.createUser({  
+   user:"msa",
+   pwd:"examples",
+   roles:[  
+    {  
+       role:"dbOwner",
+       db:"microservices"
+    }
+   ],
+   mechanisms:[  
+    "SCRAM-SHA-1"
+   ]
+  })
+``` 
+
+### Run microservice
+You can run the demo service with the following command. 
+
+```bash
+$ cd /go/to/project
 $ mvn spring-boot:run
 ```
 
