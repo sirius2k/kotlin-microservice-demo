@@ -8,6 +8,6 @@ interface AccountService {
     fun getAccount(id: String) : Mono<Account>
     fun createAccount(accountMono: Mono<Account>) : Mono<Account>
     fun updateAccount(id: String, accountMono: Mono<Account>) : Mono<Account>
-    fun deleteAccount(id: String)
+    fun deleteAccount(id: String) : Mono<Boolean>
     fun searchAccounts(idFilter: String) : Flux<Account>
 }
