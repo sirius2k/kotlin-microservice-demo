@@ -26,6 +26,19 @@ class AccountHandler(val accountService: AccountService) {
                 badRequest().body(fromObject(ErrorResponse("Error creating account", it.message ?: "error")))
             }
 
+    fun update(serverRequest: ServerRequest) =
+            accountService.updateAccount(serverRequest.pathVariable("id"), serverRequest.bodyToMono()).flatMap {
+                accepted().build()
+            }.onErrorResume(Exception::class) {
+                badRequest().body(fromObject(ErrorResponse("Error updating account", it.message ?: "error")))
+            }
+
+    fun delete(serverRequest: ServerRequest) =
+            accountService.deleteAccount(serverRequest.pathVariable("id")).flatMap {
+                if (it) ok().build()
+                else status(HttpStatus.NOT_FOUND).build()
+            }
+
     fun search(serverRequest: ServerRequest) =
             ok().body(
                     accountService.searchAccounts(serverRequest.queryParam("nameFilter").orElse("")),

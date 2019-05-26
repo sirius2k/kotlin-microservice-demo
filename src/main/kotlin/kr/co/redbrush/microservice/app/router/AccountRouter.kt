@@ -14,6 +14,8 @@ class AccountRouter(private val accountHandler: AccountHandler) {
             "/account".nest {
                 GET("/{id}", accountHandler::get)
                 POST("/", accountHandler::create)
+                PUT("/{id}", accountHandler::update)
+                DELETE("/{id}", accountHandler::delete)
             }
             "/accounts".nest {
                 GET("/", accountHandler::search)
